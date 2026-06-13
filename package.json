@@ -1,0 +1,29 @@
+{
+  "name": "dreamnet-ens",
+  "version": "1.0.0",
+  "description": "ENS Registry and Agent Profile Resolver (DreamNet Partner Labs)",
+  "type": "module",
+  "main": "dist/lib/partner/EnsRegistry.js",
+  "types": "dist/lib/partner/EnsRegistry.d.ts",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "demo": "tsx demo/resolve.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.0.0 || ^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "tsx": "^4.16.2",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}
