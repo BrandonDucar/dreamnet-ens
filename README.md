@@ -1,111 +1,88 @@
-# DreamNet ENS Module: Agent Identity Passport & Service Discovery 🌐🤖
+# DreamNet Agent Naming
 
-Part of the **DreamNet Partner Labs Suite**.
+Human-readable identity and service-discovery profiles for AI agents.
 
-## Sponsor
-**ENS (Ethereum Name Service)** - Decentralized naming system built on the Ethereum blockchain.
+This public prototype explores how ENS-compatible names and an operator-owned Basename namespace can make agents easier to identify, verify, and contact without turning a name into automatic authorization.
 
-## Thesis
-As the AI agent population grows, agents need a way to find, identify, and verify each other. A hex address is anonymous. It tells you nothing about what capabilities the agent possesses, who operates it, or how to connect to it.
+## Namespace policy
 
-`dreamnet-ens` leverages the **Ethereum Name Service (ENS)** to create the **Agent Identity Passport**. Every agent is assigned a subdomain (e.g., `neyclaw.dreamnet.eth`). Using ENS Text Records, the agent profile publishes its public endpoints (e.g., Tailscale tunnel IP) and supported capabilities. The parent name (`dreamnet.eth`) asserts authority, guaranteeing that subdomains belong to the verified operator's fleet.
+DreamNet currently treats `ghostmint.base.eth` as the operator-owned public namespace for examples and experiments:
 
----
-
-## What It Demonstrates
-1. **ENS Agent Profile Registry**: Formats and parses agent attributes into standard ENS text records.
-2. **Cryptographic Service Discovery**: Resolves agent capabilities (e.g., LLM inference, social posting), connection endpoints, and parent operators on-chain.
-3. **Interactive Domain Console**: Renders active subdomains, resolves metadata, and validates ownership.
-
----
-
-## Live vs. Sandbox Status
-* **Live Integration**: Reads directly from live ENS Registry and Resolver contracts when a valid RPC provider is supplied.
-* **Sandbox Demo**: Automatically falls back to a high-fidelity local simulator mode if no `PROVIDER_RPC_URL` is detected in the environment.
-
----
-
-## Installation & Setup
-
-### Install Dependencies
-```bash
-pnpm install
+```text
+lucid.ghostmint.base.eth
+neyclaw.ghostmint.base.eth
+builder.ghostmint.base.eth
 ```
 
-### Run Web Dashboard
+This repository does **not** claim ownership or control of `dreamnet.eth`. A readable name is a discovery pointer; trust still requires verification of the linked operator, wallet, capability evidence, endpoint, and credential status.
+
+## What the prototype demonstrates
+
+- A typed agent profile for names, wallets, capabilities, endpoints, operators, and evidence references.
+- Formatting and parsing of profile fields into ENS-compatible text-record structures.
+- An interactive lookup console for inspecting an agent identity packet.
+- A local simulator for development when a resolver or RPC provider is unavailable.
+- A path toward signed off-chain resolution, revocation, and graduation-backed credentials.
+
+## Intended trust flow
+
+```text
+human-readable name
+  -> operator-owned namespace
+  -> signed identity profile
+  -> capability and graduation evidence
+  -> endpoint discovery
+  -> independent authorization policy
+```
+
+Names improve discovery. They do not bypass permission, approval, budget, or security gates.
+
+## Status
+
+This is a public research prototype, not a production registrar or authorization service.
+
+Implemented:
+
+- Agent profile schema and parser.
+- Local resolution simulator.
+- Web lookup interface.
+- CLI lookup flow.
+
+Still required for production:
+
+- Verified Basename resolver integration.
+- Signed CCIP-Read gateway responses.
+- Key rotation and revocation.
+- Credential-status checks.
+- Threat modeling for discovery spoofing and stale records.
+- Independent tests against live Base resolution behavior.
+
+## Quick start
+
 ```bash
+pnpm install
 pnpm dev
 ```
-Navigate to `http://localhost:3000` to interact with the UI.
 
-### Run CLI Demo
-To run the CLI lookup:
+Open `http://localhost:3000`.
+
+Run the CLI demo:
+
 ```bash
 pnpm run demo
-```
-To lookup a custom domain:
-```bash
-pnpm run demo -- --name=youragent.dreamnet.eth
+pnpm run demo -- --name=lucid.ghostmint.base.eth
 ```
 
----
+The app uses simulator mode unless a compatible live provider and resolver configuration are supplied.
 
-## Environment Variables
-Create a `.env` file in the root directory:
-```bash
-PROVIDER_RPC_URL=https://sepolia.base.org
-ENS_REGISTRY_ADDRESS=0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e
-```
+## DreamNet context
 
----
+This module is one public piece of DreamNet's verifiable-agent stack:
 
-## What is Not Production Yet
-* **Automated Registrations**: Subdomains are configured manually. Production requires a registrar interface supporting gas-efficient batch subdomain minting.
-* **EAS Verification**: Operator references should be backed by Ethereum Attestation Service (EAS) claims to prevent spoofing of operator identities.
+- [DreamLoops](https://github.com/BrandonDucar/dreamloops) governs persistent work.
+- [ToolGym](https://github.com/BrandonDucar/toolgym) produces tool-mastery evidence.
+- Naming provides human-readable discovery.
+- Receipts and credentials provide evidence.
+- The runtime's authorization policy decides what an agent may actually do.
 
----
-
-## NotebookLM Summary Section
-
-* **Core Purpose**: `dreamnet-ens` provides human-readable identity subdomains and decentralized discovery text records for autonomous agent networks using ENS.
-* **Technology Stack**: Next.js App Router, React, ethers.js, ENS Registry/Resolver integration.
-* **Demo Flow**: User queries a subdomain, resolves it to retrieve the wallet address, capability tags (e.g. LLM, posting), communication endpoints, and operator credentials.
-* **Key Benefit**: Replaces centralized agent directories with secure ENS smart contracts, ensuring censorship-resistant service discovery.
-
----
-
-## Cloudflare Pages Deployment
-
-This project is configured for static HTML export and can be deployed directly to **Cloudflare Pages**.
-
-### Prerequisites
-Make sure you have Node >= 20 and Wrangler installed globally:
-```bash
-npm install -g wrangler
-```
-
-### Build Project
-Build the static site locally using pnpm:
-```bash
-pnpm install
-pnpm run build
-```
-This will compile the Next.js application and export the static assets into the `out/` directory.
-
-### Deploy via Wrangler CLI
-Deploy the pre-built static directory directly to Cloudflare Pages:
-```bash
-npx wrangler pages deploy out --project-name dreamnet-ens
-```
-*(Replace `<project-name>` with your desired project identifier, e.g., `dreamnet-0g`)*
-
-### Continuous Integration (GitHub Integration)
-Alternatively, you can connect your public GitHub repository to the Cloudflare Pages Dashboard:
-1. Navigate to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-2. Select your repository.
-3. Configure build settings:
-   - **Framework Preset**: `Next.js (Static HTML Export)`
-   - **Build Command**: `pnpm run build`
-   - **Build Output Directory**: `out`
-4. Add environment variables if needed (none are required at build time).
-5. Click **Save and Deploy**.
+See [DreamNet](https://dreamnet.ink) for the broader system.
