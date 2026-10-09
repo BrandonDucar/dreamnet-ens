@@ -1,6 +1,7 @@
 {
   "name": "dreamnet-ens",
   "version": "1.0.0",
+  "license": "Apache-2.0",
   "description": "ENS Registry and Agent Profile Resolver (DreamNet Partner Labs)",
   "type": "module",
   "main": "dist/lib/partner/EnsRegistry.js",

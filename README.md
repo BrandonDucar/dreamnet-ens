@@ -86,3 +86,7 @@ This module is one public piece of DreamNet's verifiable-agent stack:
 - The runtime's authorization policy decides what an agent may actually do.
 
 See [DreamNet](https://dreamnet.ink) for the broader system.
+
+## License
+
+Original software and project documentation are licensed under Apache-2.0. See [LICENSE](LICENSE). See [NOTICE](NOTICE) for attribution, licensing scope and third-party/media exclusions.
